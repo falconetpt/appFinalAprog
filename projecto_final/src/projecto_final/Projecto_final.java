@@ -200,7 +200,10 @@ public class Projecto_final {
     public static void inserirTempos (String[][] socios, int provas[][], int posicao, String nomeFicheiro, int prova) throws FileNotFoundException {
         Scanner fileIO = new Scanner(new FileReader(nomeFicheiro));
         while (fileIO.hasNextLine()) {
-            
+            String i = fileIO.nextLine();
+            if(i.split(";").length == 2) {
+                utilitarios.registaTempo(socios, provas, i, posicao, prova);
+            }
         }
         fileIO.close();
     }

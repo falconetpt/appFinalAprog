@@ -365,21 +365,15 @@ public class utilitarios {
     }
     
     //regista o tempo na arr de um determinado SOCIO
-    public static boolean registaTempo(String socios[][], int provas[][], String dados, int posicao, int nProvas) {
+    public static boolean registaTempo(String socios[][], int provas[][], String dados, int posicao, int prova) {
         String elementos[] = dados.split(";");
         
         int inicioNif = elementos[0].length() - 9;
         String nif = elementos[0].trim().substring(inicioNif);
         
-        System.out.println(nif + "-" + (elementos[1]));
+        //System.out.println(nif + "-" + (elementos[1]));
      
-        int prova = Integer.parseInt(elementos[0].substring(0,2));
         int index = indexOf(socios, nif, posicao);
-        
-        //triamos que nao temos inputs invalidos de provas
-        if(prova > nProvas) {
-            return false;
-        }
         
         //garantir que nao existem tempos ja inseridos
         if(index == -1 || provas[index][prova - 1] > 0) {
