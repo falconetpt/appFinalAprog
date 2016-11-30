@@ -1,8 +1,11 @@
 
 package projecto_final;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.Scanner;
 
 public class utilitarios {
@@ -385,4 +388,90 @@ public class utilitarios {
         return true;
     }
     
+    public static void ordenarArr(String socios[][], int provas[][], int posicao) {
+        int tmpProvas[];
+        String tmpSocios[];
+                
+        for(int i = 0; i < posicao; i++) {
+            for(int j = i+1; j < posicao; j++) {
+                if(socios[i][1].compareToIgnoreCase(socios[j][1]) > 0) {
+                    tmpSocios = socios[i];
+                    tmpProvas = provas[i];
+                    
+                    socios[i] = socios[j];
+                    provas[i] = provas[j];
+                    
+                    socios[j] = tmpSocios;
+                    provas[j] = tmpProvas;
+                }
+            }
+        }
+    }
+    
+    public static boolean inscricaoValida(int provas[][], int prova, int posicao) {
+        for(int i = 0; i < posicao; i++) {
+            if(provas[i][prova - 1] == 0) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public static void listarElementos(String socios[][], int provas[][], int posicao, String tipo) throws FileNotFoundException {
+        
+        String delimitador = "| \t\t\t";
+        Formatter output = new Formatter(new File("backup.txt"));
+        
+        if (tipo.equalsIgnoreCase("f")) {
+            delimitador = ";";   
+        } 
+        
+        String linha = "";
+        for(int i = 0; i < posicao; i++) {
+            linha = "";
+            for(int j = 0; j < socios[0].length; j++) {
+                linha += socios[i][j] + delimitador;
+            }
+            
+            for(int k = 0; k< provas[i].length; k++) {
+                if(provas[i][k] < 1) {
+                    if(provas[i][k] == -1) {
+                        linha += "N_INSC" + delimitador;
+                    }
+                    
+                    if (provas[i][k] == 0) {
+                        linha += "INSC" + delimitador;
+                    }
+                } else {
+                    linha += converteSegundos(provas[i][k]) + delimitador;
+                }
+            }
+            
+            linha = linha.substring(0, linha.length() - 1);
+            
+            if (tipo.equalsIgnoreCase("e")) {
+                System.out.println(linha);
+            } else {
+                output.format("%s%n", linha);
+            }
+            
+        }
+        
+        output.close();
+    }
+    
+    public static String converteSegundos(int segundos) {
+        String tempo = "";
+        
+        int horas = segundos / (60*60);
+        segundos -= horas * (60*60);
+        
+        int minutos = segundos / 60;
+        segundos -= minutos * 60;
+        
+        //segundos
+        tempo = horas + ":" + minutos + ":" + segundos;
+        return tempo;
+    }
 }

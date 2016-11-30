@@ -88,11 +88,27 @@ public class Projecto_final {
                 case 5:  
                     //lerTempos(tabela,numSocios);
                     int provaTempos = pedeProva(socios, provas, posicao);
-                    inserirTempos (socios, provas, posicao, templateFileTempos + provaTempos + ".txt", provaTempos);
+                    if(utilitarios.inscricaoValida(provas,  provaTempos, posicao)) {
+                        inserirTempos (socios, provas, posicao, templateFileTempos + provaTempos + ".txt", provaTempos);
+                    } else {
+                        System.out.println("Precisa de inscrever todos os atletas antes de importar os tempos\n");
+                    }
                     
                     break;
                 case 6:  
-                    //printOuGuardar(tabela,numSocios);
+                    //printOuGuardar(Megatabela,numSocios);
+                   
+                    String tipoVisual = "";
+                    do {
+                         System.out.println("\n----\nDeseja ver a info de que modo:\n\t-(E)cra\n\t-(F)icheiro");
+                         tipoVisual = scan.nextLine();
+                    } while(!( tipoVisual.equalsIgnoreCase("f") || tipoVisual.equalsIgnoreCase("e") ));
+                    
+                    //ordenar 
+                    utilitarios.ordenarArr(socios, provas, posicao);
+                    
+                    utilitarios.listarElementos(socios, provas, posicao, tipoVisual);
+                    
                     break;
                 case 7:  
                     //numSocios=removerSocio(tabela,numSocios);//atualiza o numSocios   
@@ -104,12 +120,15 @@ public class Projecto_final {
                     break;
                 case 8:  
                     //melhoresPiores(tabela,numSocios);//calcula media dos tempos e mostra top e bottom
+                    
                     break;
                 case 9:  
                     //estatisticas(tabela,numSocios); //% incr --> %mulheres E após a prova %inscr que Desist ou Faltaram
+                    
                     break;
                 case 10: 
                     //guardarInfo(tabela, numSocios);//criar ficheiro Runers2016 com toda a info
+                    
                     break;
                 case 0: 
                     break;
@@ -132,10 +151,12 @@ public class Projecto_final {
         
         //posicao = inserirInscricoes(socios, posicao, "inscricoes.txt");
         
+        //System.out.println(utilitarios.converteSegundos(5000));
         //utilitarios.iniciaProvas(provas, posicao);
         
-        
-        utilitarios.listarPaginado(provas, posicao, paginacao);
+        //utilitarios.listarPaginado(socios, posicao, paginacao);
+        //utilitarios.listarPaginado(provas, posicao, paginacao);
+        //utilitarios.listarElementos(socios, provas, posicao);
         
         /*
         utilitarios.iniciaProvas(provas, 3);
