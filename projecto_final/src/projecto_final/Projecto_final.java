@@ -18,6 +18,7 @@ public class Projecto_final {
     public static final int nDadosAtleta = 4;
     public static final int nProvas = 5;
     public static final int paginacao = 4;
+    public static final String templateFileTempos = "Tempos";
     
     public static final File fileInscricoes = new File("inscricoes.txt");
     public static Scanner scan = new Scanner(System.in);
@@ -81,15 +82,13 @@ public class Projecto_final {
                     //lerInscricoes(tabela,numSocios); //envia matriz para passar a info do ficheiro
                     System.out.println("Insira o nome do ficheiro de inscricoes a inserir:");
                     String fileInscricoes = scan.nextLine();
-                    int prova = 0;
-                    do {
-                        System.out.println("insira o numero da prova");
-                        prova = Integer.parseInt(scan.nextLine());
-                    } while(prova < 0 || prova > nProvas);
-                    inscricoes(socios, provas, posicao, fileInscricoes, prova);
+                    int provaInscrever = pedeProva(socios, provas, posicao);
+                    inscricoes(socios, provas, posicao, fileInscricoes, provaInscrever);
                     break;
                 case 5:  
                     //lerTempos(tabela,numSocios);
+                    int provaTempos = pedeProva(socios, provas, posicao);
+                    inserirTempos (socios, provas, posicao, templateFileTempos + provaTempos + ".txt", provaTempos);
                     
                     break;
                 case 6:  
@@ -198,9 +197,25 @@ public class Projecto_final {
         fileIO.close();
     }
     
-    public static void inserirTempos (String[][] socios, int provas[][], int posicao, String nomeFicheiro, int prova) {
-        
+    public static void inserirTempos (String[][] socios, int provas[][], int posicao, String nomeFicheiro, int prova) throws FileNotFoundException {
+        Scanner fileIO = new Scanner(new FileReader(nomeFicheiro));
+        while (fileIO.hasNextLine()) {
+            
+        }
+        fileIO.close();
     }
+    
+    public static int pedeProva(String socios[][], int provas[][], int posicao) {
+        int prova = 0;
+        
+        do {
+            System.out.println("insira o numero da prova");
+            prova = Integer.parseInt(scan.nextLine());
+        } while(prova < 0 || prova > nProvas);
+        
+        return prova;
+    }
+}
     
     
         /**********************************
@@ -216,4 +231,3 @@ public class Projecto_final {
             //System.out.println(utilitarios.nomeValido("Ricardo Gomes"));
             //utilitarios.mudaData(socios, "443543674", 3);
             //System.out.println(utilitarios.validaData("28/3/2016"));
-}

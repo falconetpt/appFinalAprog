@@ -338,9 +338,13 @@ public class utilitarios {
             return false;
         }
         
+        String tmp[];
+        
         for(int i = index; i < posicao; i++) {
             for(int j = i+1; j < posicao;j ++) {
+                tmp = socios[i];
                 socios[i] = socios[j];
+                socios[j] = tmp;
             }
         }
         
