@@ -57,12 +57,21 @@ public class Projecto_final {
                             + "\t0 - Terminar. \n");
             
             
+            
             opcao=Integer.parseInt(scan.nextLine());
+            
             switch (opcao) {
                 case 1: 
                     System.out.println("Insira o nome do ficheiro a inserir:");
                     String fileSocios = scan.nextLine();
-                    posicao=inserirInscricoes(socios, provas, posicao, fileSocios); //envia matriz para guardar a info do fich, return numSocios 
+                    
+                    if(isFile(fileSocios)) {
+                        //envia matriz para guardar a info do fich, return numSocios 
+                        posicao=inserirInscricoes(socios, provas, posicao, fileSocios);
+                    } else {
+                        System.out.println("O ficheiro nao existe");
+                    }
+                     
                     break;
                 case 2:  
                     //print(tabela,numSocios); //envia matriz para fazer o print ??? printar só os 4 prim campos ou tudo?
@@ -83,13 +92,23 @@ public class Projecto_final {
                     System.out.println("Insira o nome do ficheiro de inscricoes a inserir:");
                     String fileInscricoes = scan.nextLine();
                     int provaInscrever = pedeProva(socios, provas, posicao);
-                    inscricoes(socios, provas, posicao, fileInscricoes, provaInscrever);
+                    if(isFile(fileInscricoes)) {
+                        inscricoes(socios, provas, posicao, fileInscricoes, provaInscrever);
+                    } else {
+                        System.out.println("O ficheiro nao existe");
+                    }
                     break;
                 case 5:  
                     //lerTempos(tabela,numSocios);
                     int provaTempos = pedeProva(socios, provas, posicao);
                     if(utilitarios.inscricaoValida(provas,  provaTempos, posicao)) {
-                        inserirTempos (socios, provas, posicao, templateFileTempos + provaTempos + ".txt", provaTempos);
+                        String fileTempos = templateFileTempos + provaTempos + ".txt";
+                        if(isFile(fileTempos)) {
+                            inserirTempos (socios, provas, posicao,fileTempos , provaTempos);
+                        } else {
+                            System.out.println("O ficheiro nao existe");
+                        }
+                        
                     } else {
                         System.out.println("Precisa de inscrever todos os atletas antes de importar os tempos\n");
                     }
@@ -124,7 +143,7 @@ public class Projecto_final {
                     break;
                 case 9:  
                     //estatisticas(tabela,numSocios); //% incr --> %mulheres E após a prova %inscr que Desist ou Faltaram
-                    
+                    utilitarios.percInscritos(socios, provas, posicao);
                     break;
                 case 10: 
                     //guardarInfo(tabela, numSocios);//criar ficheiro Runers2016 com toda a info
@@ -211,7 +230,7 @@ public class Projecto_final {
         while (fileIO.hasNextLine()) {
             String i = fileIO.nextLine();
             int index = utilitarios.indexOf(socios, i.trim(), posicao);
-            if(index != -1 && provas[index][prova - 1] == -1) {
+            if(index != -1 && provas[index][prova - 1] == -1 && !utilitarios.provaRealizada(provas, posicao, prova)) {
                 provas[index][prova -1] = 0;
             }
         }
@@ -222,7 +241,8 @@ public class Projecto_final {
         Scanner fileIO = new Scanner(new FileReader(nomeFicheiro));
         while (fileIO.hasNextLine()) {
             String i = fileIO.nextLine();
-            if(i.split(";").length == 2) {
+            int index = utilitarios.indexOf(socios, i, posicao);
+            if(i.split(";").length == 2 && !utilitarios.provaRealizada(provas, posicao, prova)) {
                 utilitarios.registaTempo(socios, provas, i, posicao, prova);
             }
         }
@@ -238,6 +258,14 @@ public class Projecto_final {
         } while(prova < 0 || prova > nProvas);
         
         return prova;
+    }
+    
+    public static boolean isFile(String nomeFile) {
+        File f = new File(nomeFile);
+        if(f.isFile() && f.canRead()) {
+            return true;
+        }
+        return false;
     }
 }
     

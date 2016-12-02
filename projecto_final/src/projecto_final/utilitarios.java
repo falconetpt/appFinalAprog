@@ -383,6 +383,10 @@ public class utilitarios {
             return false;
         }
         
+        if(provas[index][prova - 1] == -1) {
+            return false;
+        }
+            
         provas[index][prova - 1] = Integer.parseInt(elementos[1].trim());
         
         return true;
@@ -473,5 +477,57 @@ public class utilitarios {
         //segundos
         tempo = horas + ":" + minutos + ":" + segundos;
         return tempo;
+    }
+    
+    public static boolean provaRealizada(int provas[][], int posicao, int prova) {
+        for (int i =0; i < posicao; i++) {
+            if(provas[i][prova - 1] > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public static void percInscritos(String[][] socios, int provas[][], int posicao) {
+        int contador = 0;
+        int mulheres = 0;
+        int faltosos = 0;
+        
+        for(int i = 0; i < provas[0].length;i++) {
+            mulheres = 0;
+            contador = 0;
+            faltosos = 0;
+            
+            System.out.println("== Prova " + (i + 1));
+            for (int j = 0; j < posicao; j++) {
+                if(provas[j][i] >= 0) {
+                    contador++;
+                    if(socios[j][3].equalsIgnoreCase("feminino")) {
+                        mulheres++;
+                    }
+                    if(provas[j][i] == 0) {
+                        faltosos++;
+                    }
+                }
+            }
+            if(contador > 0) {
+                //System.out.printf("\n\t - Percengem de inscritos: %d", (double) contador / posicao * 100);
+                //System.out.printf("\n\t - Percengem de mulheres inscritas: %d", (double) mulheres / contador * 100);
+                String percInsc = Math.round((double) contador / posicao * 100) + "";
+                String percMulheres = Math.round((double) mulheres / contador * 100) + "";
+                String percFaltas = Math.round((double) faltosos / contador * 100) + "";
+                
+                if(provaRealizada(provas, posicao, (i + 1))) {
+                    System.out.printf("\n\t - Percengem de faltosos: %s %%", percFaltas);
+                }
+                System.out.printf("\n\t - Percengem de inscritos: %s %%", percInsc);
+                
+                System.out.printf("\n\t - Percengem de mulheres inscritas: %s %%\n", percMulheres);
+            } else {
+                System.out.println("Nao existem inscricoes de momento");
+            }
+            
+        }
+        
     }
 }
