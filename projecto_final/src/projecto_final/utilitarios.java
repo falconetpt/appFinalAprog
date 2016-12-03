@@ -530,4 +530,139 @@ public class utilitarios {
         }
         
     }
+    
+    public static String tempoMedio(int provas[][], int posicao, int prova) {
+        int total = 0;
+        int contagem = 0;
+        
+        for(int i = 0; i < posicao;i++) {
+            if(provas[i][prova -1] > 0) {
+                total += provas[i][prova -1];
+                contagem++;
+            }
+        }
+        
+        if(contagem == 0) {
+            return " - ";
+        }
+        
+        return converteSegundos(total / contagem);
+    }
+    
+    public static void melhoresPiores(int provas[][], int posicao, int prova) {
+        int ordenado[] = new int[posicao];
+        
+        for (int i = 0; i < posicao; i++) {
+            ordenado[i] = provas[i][prova - 1]; 
+        }
+        
+        ordenarTempos(ordenado);
+        
+        //imprime melhores
+        System.out.println("\n\n-- TOP 10 --");
+        for(int i = 0; i < Math.min( 9 ,ordenado.length); i++) {
+            if(ordenado[i] > 0) {
+                System.out.println( (i+1) + " -- " + converteSegundos(ordenado[i]));
+            }
+        }
+        
+        //imprime piores
+        System.out.println("\n\n-- BOTTOM 10 --");
+        for(int i = Math.min( 9 ,ordenado.length) - 1; i >=0 ; i--) {
+            if(ordenado[i] > 0) {
+                System.out.println( (Math.min( 9 ,ordenado.length) - i) + " -- " + converteSegundos(ordenado[i]));
+            }
+        }
+        
+        
+    }
+    
+    public static void ordenarTempos(int provas[]) {
+        int tmp;
+        for(int i = 0; i < provas.length; i++) {
+            for(int j = i+1; j < provas.length; j++) {
+                if(provas[j] > provas[i]) {
+                    tmp = provas[i];
+                    provas[i] = provas[j];
+                    provas[j] = tmp;
+                }
+            } 
+        }
+    }
+    
+    public static void guardarInfo(String socios[][], int provas[][], int posicao, String data, int numCamposReport) throws FileNotFoundException {
+        Formatter outputTxt = new Formatter(new File("Runners2016.txt"));
+        String writeToFile = "";
+        
+        String output[][] = new String[posicao][numCamposReport];
+        
+        for(int i = 0; i < posicao; i++) {
+            output[i][0] = reduzirNome(socios[i][1]);
+            output[i][1] = calcIdade(socios[i][2], data) + "";
+            output[i][2] = contarProvas(provas[i]) + "";
+            if(output[i][2].equals("0")) {
+                output[i][3] = "-";
+            } else {
+                output[i][3] = converteSegundos(tempoMedioAtleta(provas[i]) / contarProvas(provas[i]));
+            }
+        }
+        
+        ordenarIdades(output);
+        
+        writeToFile += "\t\t -- Listagem de tempos --\n";
+        writeToFile += "Nome abreviado \t Idade \t N Provas Realizadas \t Tempo médio\n";
+        
+        for(int i = 0; i < output.length; i++) {
+            for (int j = 0; j < output[0].length; j++) {
+                if (j == 2) {
+                    writeToFile += "\t\t";
+                }
+                writeToFile += output[i][j] + "\t";
+            }
+            writeToFile += "\n";
+        }
+        
+        writeToFile += "\n\t\t\t\t\t\t<" + data + ">";
+        
+        
+        outputTxt.format("%s%n", writeToFile);
+        outputTxt.close();
+        System.out.println("Info Guardada no ficheiro Runners2016.txt");
+        
+    }
+    
+    public static int contarProvas(int linhaProva[]) {
+        int cont = 0;
+        for(int i =0; i < linhaProva.length; i++) {
+            if(linhaProva[i] > 0) {
+                cont++;
+            }
+        }
+                
+        return cont;
+    }
+    
+    public static int tempoMedioAtleta(int linhaProva[]) {
+        int total = 0;
+        for(int i =0; i < linhaProva.length; i++) {
+            if(linhaProva[i] > 0) {
+                total+=linhaProva[i];
+            }
+        }
+                
+        return total;
+    }
+    
+     public static void ordenarIdades(String report[][]) {
+        String tmp;
+        for(int i = 0; i < report.length; i++) {
+            for(int j = i+1; j < report.length; j++) {
+                if(Integer.parseInt(report[j][1]) > Integer.parseInt(report[i][1])) {
+                    tmp = report[i][1];
+                    report[i][1] = report[j][1];
+                    report[j][1] = tmp;
+                }
+            } 
+        }
+    }
 }

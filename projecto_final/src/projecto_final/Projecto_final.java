@@ -19,6 +19,7 @@ public class Projecto_final {
     public static final int nProvas = 5;
     public static final int paginacao = 4;
     public static final String templateFileTempos = "Tempos";
+    public static final int numCamposReport = 4;
     
     public static final File fileInscricoes = new File("inscricoes.txt");
     public static Scanner scan = new Scanner(System.in);
@@ -26,7 +27,7 @@ public class Projecto_final {
     //Variaveis para contruir a data do dia actual
     public static final Date today = new Date();
     public static final String hoje = today.getDate() + "/" 
-            + today.getMonth() + "/" + (today.getYear() + 1900);
+            + (today.getMonth() +1) + "/" + (today.getYear() + 1900);
     
     
     /*
@@ -44,10 +45,10 @@ public class Projecto_final {
             //menu
             System.out.print("\n========MENU========\n"
                             + "Escolha a opção que pretende:\n"
-                            + "\t1 - Ler ficheiro com inscrições de sócios.\n"
+                            + "\t1 - Ler ficheiro com inscrições de sócios. (FILE: inscricoes.txt)\n"
                             + "\t2 - Visualizar a informação dos sócios.\n"
                             + "\t3 - Atualizar a informação de um sócio.\n"
-                            + "\t4 - Ler ficheiro com informação de inscrições.\n"
+                            + "\t4 - Ler ficheiro com informação de inscrições. (FILE: prova1_inscricoes.txt)\n"
                             + "\t5 - Ler ficheiro com informação de tempos.\n"
                             + "\t6 - Listagem para ecrã/ficheiro da informação.\n"
                             + "\t7 - Remover um sócio e toda a sua informação.\n"
@@ -91,7 +92,7 @@ public class Projecto_final {
                     //lerInscricoes(tabela,numSocios); //envia matriz para passar a info do ficheiro
                     System.out.println("Insira o nome do ficheiro de inscricoes a inserir:");
                     String fileInscricoes = scan.nextLine();
-                    int provaInscrever = pedeProva(socios, provas, posicao);
+                    int provaInscrever = pedeProva();
                     if(isFile(fileInscricoes)) {
                         inscricoes(socios, provas, posicao, fileInscricoes, provaInscrever);
                     } else {
@@ -100,7 +101,7 @@ public class Projecto_final {
                     break;
                 case 5:  
                     //lerTempos(tabela,numSocios);
-                    int provaTempos = pedeProva(socios, provas, posicao);
+                    int provaTempos = pedeProva();
                     if(utilitarios.inscricaoValida(provas,  provaTempos, posicao)) {
                         String fileTempos = templateFileTempos + provaTempos + ".txt";
                         if(isFile(fileTempos)) {
@@ -139,7 +140,9 @@ public class Projecto_final {
                     break;
                 case 8:  
                     //melhoresPiores(tabela,numSocios);//calcula media dos tempos e mostra top e bottom
-                    
+                    int estProva = pedeProva();
+                    System.out.println("--TEMPO MEDIO-- \n" + utilitarios.tempoMedio(provas, posicao, estProva));
+                    utilitarios.melhoresPiores(provas, posicao, estProva);
                     break;
                 case 9:  
                     //estatisticas(tabela,numSocios); //% incr --> %mulheres E após a prova %inscr que Desist ou Faltaram
@@ -147,7 +150,7 @@ public class Projecto_final {
                     break;
                 case 10: 
                     //guardarInfo(tabela, numSocios);//criar ficheiro Runers2016 com toda a info
-                    
+                    utilitarios.guardarInfo(socios, provas, posicao, hoje, numCamposReport);
                     break;
                 case 0: 
                     break;
@@ -249,7 +252,7 @@ public class Projecto_final {
         fileIO.close();
     }
     
-    public static int pedeProva(String socios[][], int provas[][], int posicao) {
+    public static int pedeProva() {
         int prova = 0;
         
         do {
