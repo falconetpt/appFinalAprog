@@ -17,3 +17,12 @@
   143543763 ;Ana fsfs regex ;31/1/1999; feminino
 
 44354376 ;Ana fsfs regexNot ;31/1/1999; feminino
+
+
+443543769 ;testes yolo swag ;29/2/1999; feminino
+
+443543676 ;Ana Rita Gomes;28/2/1999; feminino
+443543678;   Ana Rita Gomes Costa;   31/1/2009 ; feminino
+
+1443543678;   Ana Rita Gomes Costa;   31/1/2009 ; feminino
+

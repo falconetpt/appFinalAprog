@@ -177,10 +177,12 @@ public class utilitarios {
         
         //valida sexo
         if(!(sexo.equalsIgnoreCase("masculino") || sexo.equalsIgnoreCase("feminino"))) {
+            erros.erroInscricoes("sexo: " + sexo + " ivalido");
             return false;
         }
         
         if(indexOf(socios, nif, posicao) != -1) {
+            erros.erroInscricoes("Nif: " + nif + " ja registado em estrutura de dados");
             return false;
         }
         
@@ -202,7 +204,7 @@ public class utilitarios {
     
     //valida nif
     public static boolean nifValido(String nif) {
-        String pattern = "[1-9][0-9]{8}";
+        String pattern = "^[1-9][0-9]{8}$";
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(nif);
 

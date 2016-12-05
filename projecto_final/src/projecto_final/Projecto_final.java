@@ -35,7 +35,7 @@ public class Projecto_final {
                 *****MAIN*****
      =====================================
     */
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
         String[][] socios = new String[nAtletas][nDadosAtleta];
         int[][] provas = new int[nAtletas][nProvas];
         int posicao = 0;
@@ -216,7 +216,7 @@ public class Projecto_final {
         //*/
     } 
     
-    public static int inserirInscricoes(String[][] socios, int provas[][], int posicao, String nomeFicheiro) throws FileNotFoundException {
+    public static int inserirInscricoes(String[][] socios, int provas[][], int posicao, String nomeFicheiro) throws IOException {
         Scanner fileIO = new Scanner(new FileReader(nomeFicheiro));
         while (fileIO.hasNextLine() && posicao < nAtletas) {
             String i = fileIO.nextLine();
@@ -244,7 +244,7 @@ public class Projecto_final {
             int index = utilitarios.indexOf(socios, i.trim(), posicao);
             if(index != -1 && provas[index][prova - 1] == -1 && !utilitarios.provaRealizada(provas, posicao, prova)) {
                 provas[index][prova -1] = 0;
-            }
+            } 
         }
         fileIO.close();
     }

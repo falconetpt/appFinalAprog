@@ -1,4 +1,15 @@
 ERROS
 £££££#########¢€¢#€ -- Numero de campos invalido
+data: 29/2/1999 estrutura invalida
 Nif:  com estrutura invalida
 Nif: 44354376 com estrutura invalida
+data: 29/2/1999 estrutura invalida
+Nif: 443543676 ja registado em estrutura de dados
+Nif: 443543678 ja registado em estrutura de dados
+Nif: 1443543678 com estrutura invalida
+: Campos invalidos
+443543679 : Campos invalidos
+ 12312: Campos invalidos
+443543678: Campos invalidos
+: Campos invalidos
+: Campos invalidos
