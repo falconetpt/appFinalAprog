@@ -1,0 +1,4 @@
+ERROS
+£££££#########¢€¢#€ -- Numero de campos invalido
+Nif:  com estrutura invalida
+Nif: 44354376 com estrutura invalida

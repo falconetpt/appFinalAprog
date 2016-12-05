@@ -14,4 +14,6 @@
 443543676 ;Ana Rita Gomes;29/2/1999; feminino
    443543763 ;Ana fsfs dasdsad ;31/1/1999; feminino
   ; ; ; ;
-  
+  143543763 ;Ana fsfs regex ;31/1/1999; feminino
+
+44354376 ;Ana fsfs regexNot ;31/1/1999; feminino

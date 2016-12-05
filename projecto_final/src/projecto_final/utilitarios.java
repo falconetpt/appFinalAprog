@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Formatter;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class utilitarios {
     
@@ -137,10 +140,14 @@ public class utilitarios {
     }
     
     //validacao de linha texto -- GLOBAL CONNECTOR --
-    public static boolean validacao(String dados, int nDadosAtleta, String socios[][], int posicao) {
+    public static boolean validacao(String dados, int nDadosAtleta, String socios[][], int posicao) throws IOException {
         String arrValidacao[] = dados.split(";");
       
         if (arrValidacao.length != nDadosAtleta) {
+            if(dados.length() != 0) {
+                erros.erroInscricoes(dados + " -- Numero de campos invalido");
+            }
+           
             return false;
         }
         
@@ -152,16 +159,19 @@ public class utilitarios {
                 
         //valida se o NIF tem 9 chars
         if(!nifValido(nif)) {
+            erros.erroInscricoes("Nif: " + nif + " com estrutura invalida");
             return false;
         }
         
         //valida se o nome contem nome e apelido
         if(!nomeValido(nome)) {
+            erros.erroInscricoes("Nome: " + nome + " com nao possui nome e apelido");
             return false;
         }
         
         //valida estrutura de datas
         if(!validaData(data)) {
+            erros.erroInscricoes("data: " + data + " estrutura invalida");
             return false;
         }
         
@@ -192,10 +202,14 @@ public class utilitarios {
     
     //valida nif
     public static boolean nifValido(String nif) {
-        if(nif.length() != 9) {
-            return false;
+        String pattern = "[1-9][0-9]{8}";
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(nif);
+
+        if(m.find( )) {
+            return true;
         }
-        return true;
+        return false;
     }
     
     //valida nome
@@ -665,4 +679,16 @@ public class utilitarios {
             } 
         }
     }
+    
+    public static boolean isNumber(String inputStr) {
+        String pattern = "[^0-9]";
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(inputStr);
+        
+        if(m.find( )  || inputStr.length() == 0) {
+            return false;
+        }
+        return true;
+    }
+     
 }

@@ -40,7 +40,9 @@ public class Projecto_final {
         int[][] provas = new int[nAtletas][nProvas];
         int posicao = 0;
         int opcao=0;
+        String opcaoString = "";
 
+        erros.initialize();
         do {
             //menu
             System.out.print("\n========MENU========\n"
@@ -59,7 +61,14 @@ public class Projecto_final {
             
             
             
-            opcao=Integer.parseInt(scan.nextLine());
+            opcaoString =scan.nextLine();
+            
+            if(utilitarios.isNumber(opcaoString)) {
+                opcao=Integer.parseInt(opcaoString);
+            } else {
+                opcao=-1;
+            }
+            
             
             switch (opcao) {
                 case 1: 
@@ -257,7 +266,13 @@ public class Projecto_final {
         
         do {
             System.out.println("insira o numero da prova");
-            prova = Integer.parseInt(scan.nextLine());
+            String provaStr = scan.nextLine();
+            if(utilitarios.isNumber(provaStr)) {
+                prova = Integer.parseInt(provaStr);
+            } else {
+                prova=-1;
+            }
+            
         } while(prova < 0 || prova > nProvas);
         
         return prova;
